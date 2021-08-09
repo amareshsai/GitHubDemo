@@ -1,0 +1,94 @@
+https://localhost:9002/trainingstorefront/?site=apparel-uk
+
+https://localhost:9002/admin
+
+
+
+
+
+
+
+table name-contactus
+attributes-firstName,lastName, unique-email,unique-phoneNumber-these two mandatory and unique.
+
+
+
+
+1)go to platform and open cmd
+2)setjavapath to cmd
+3)set ant environment to cmd
+4)run ant all in cmd
+5)run hybrisserver
+6)open hac and go to administration and click on update 
+7)open backoffice and go to types and search for your table 
+-------------------------------------------------------------
+
+
+
+   <itemtype code="SpecialCustomer" autocreate="true" generate="true" extends="Customer">
+                <attributes>
+                    <attribute qualifier="specialDiscounts" type="java.lang.Integer">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="specialPoints" type="java.lang.Integer">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="customMessgae" type="java.lang.String">
+                        <persistence type="dynamic" attributeHandler="customMessageDynamicAttributeHandler"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+-------------------------------------------------------------------------------------------
+
+
+
+package vsr.training.core.dynamic.attribute;
+
+import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
+import vsr.training.core.model.SpecialCustomerModel;
+
+public class CustomMessageDynamicAttributeHandler extends AbstractDynamicAttributeHandler<String, SpecialCustomerModel>
+{
+
+    @Override
+    public String get(final SpecialCustomerModel model)
+    {
+        return model.getName() + model.getDisplayName();
+    }
+
+    @Override
+    public void set(final SpecialCustomerModel model, final String s)
+    {
+        //
+     }
+}
+
+Items.xml: 
+
+
+            <itemtype code="SpecialCustomer" autocreate="true" generate="true" extends="Customer">
+                <attributes>
+                    <attribute qualifier="specialDiscounts" type="java.lang.Integer">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="specialPoints" type="java.lang.Integer">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="customMessgae" type="java.lang.String">
+                        <persistence type="dynamic" attributeHandler="customMessageDynamicAttributeHandler"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+SPRINg.XML:
+
+	<bean id="customMessageDynamicAttributeHandler" class="vsr.training.core.dynamic.attribute.CustomMessageDynamicAttributeHandler"/>
+
+
+
+
+
+
+
+
+
